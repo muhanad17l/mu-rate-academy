@@ -1,0 +1,426 @@
+<!-- ملف HTML لتطبيق تقييم الكورس -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقييم الكورس</title>
+    <!-- تضمين مكتبة Tailwind CSS للجمالية والتصميم المتجاوب -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تضمين خط Inter من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            direction: rtl; /* اتجاه النص من اليمين لليسار */
+            text-align: right; /* محاذاة النص لليمين */
+        }
+        .star {
+            cursor: pointer;
+            transition: color 0.2s;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
+            width: 2rem; /* تأكد من حجم النجمة */
+            height: 2rem;
+        }
+        .star.filled {
+            color: #f59e0b;
+        }
+        .star:hover, .star:hover ~ .star {
+            color: #fcd34d;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-xl shadow-2xl p-8 max-w-lg w-full flex flex-col gap-6">
+
+        <!-- واجهة الطالب للتقييم -->
+        <div id="student-view" class="flex flex-col gap-6">
+            <h1 class="text-3xl font-bold text-gray-800 text-center">تقييم كورس الرسم</h1>
+            <p class="text-gray-600 text-center">أهلاً بك أيها الطالب، نرجو منك تقييم الكورس لمساعدتنا على تحسينه.</p>
+            
+            <form id="student-rating-form" class="space-y-6">
+                <div>
+                    <label for="student-name-input" class="block text-sm font-medium text-gray-700">الاسم:</label>
+                    <input type="text" id="student-name-input" name="student-name" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">التقييم:</label>
+                    <div id="student-stars-container" class="flex flex-row-reverse justify-center gap-1 text-gray-400 text-4xl">
+                        <!-- نجوم التقييم للطالب -->
+                        <svg class="star" data-rating="5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                        </svg>
+                        <svg class="star" data-rating="4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                        </svg>
+                        <svg class="star" data-rating="3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                        </svg>
+                        <svg class="star" data-rating="2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                        </svg>
+                        <svg class="star" data-rating="1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <button type="submit" id="student-submit-btn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200">
+                    إرسال التقييم
+                </button>
+            </form>
+            
+            <div id="message-box" class="mt-4 p-4 rounded-lg text-center" style="display:none;"></div>
+        </div>
+
+        <!-- واجهة المدير لعرض التقييمات وتصديرها -->
+        <div id="admin-view" class="hidden flex-col gap-6">
+            <h1 class="text-3xl font-bold text-gray-800 text-center">لوحة تحكم التقييمات</h1>
+            <p class="text-gray-600 text-center">هنا يمكنك عرض جميع التقييمات المقدمة. سيتم تحديث القائمة تلقائيًا.</p>
+
+            <!-- نموذج تقييم المدير -->
+            <div class="bg-gray-50 p-6 rounded-xl shadow-inner">
+                <h2 class="text-xl font-bold text-gray-700 mb-4">تقييمي للكورس:</h2>
+                <form id="admin-rating-form" class="space-y-4">
+                    <div>
+                        <label for="admin-name-input" class="block text-sm font-medium text-gray-700">الاسم:</label>
+                        <input type="text" id="admin-name-input" name="admin-name" required
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">التقييم:</label>
+                        <div id="admin-stars-container" class="flex flex-row-reverse justify-center gap-1 text-gray-400 text-4xl">
+                             <!-- نجوم التقييم للمدير -->
+                            <svg class="star" data-rating="5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                            </svg>
+                            <svg class="star" data-rating="4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                            </svg>
+                            <svg class="star" data-rating="3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                            </svg>
+                            <svg class="star" data-rating="2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                            </svg>
+                            <svg class="star" data-rating="1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <button type="submit" id="admin-submit-btn"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200">
+                        إرسال تقييمي
+                    </button>
+                </form>
+            </div>
+            
+            <div id="admin-message-box" class="mt-4 p-4 rounded-lg text-center" style="display:none;"></div>
+            
+            <button id="export-btn"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200">
+                تصدير إلى Excel (ملف CSV)
+            </button>
+            
+            <div id="ratings-list" class="mt-4 space-y-4">
+                <p class="text-gray-500 text-center">جاري تحميل التقييمات...</p>
+            </div>
+            <p class="text-xs text-gray-400 text-center">رقم تعريف المستخدم: <span id="user-id"></span></p>
+        </div>
+
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Initialize Firebase
+        let app, db, auth;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } catch (error) {
+            console.error("Error initializing Firebase:", error);
+            // Display an error message if Firebase initialization fails
+            document.body.innerHTML = '<div class="bg-red-200 text-red-800 p-4 rounded-lg text-center">فشل تهيئة Firebase. يرجى إعادة تحميل الصفحة.</div>';
+        }
+
+        // DOM elements
+        const studentView = document.getElementById('student-view');
+        const adminView = document.getElementById('admin-view');
+        const studentRatingForm = document.getElementById('student-rating-form');
+        const studentNameInput = document.getElementById('student-name-input');
+        const studentStarsContainer = document.getElementById('student-stars-container');
+        const studentSubmitBtn = document.getElementById('student-submit-btn');
+        const messageBox = document.getElementById('message-box');
+        
+        const adminRatingForm = document.getElementById('admin-rating-form');
+        const adminNameInput = document.getElementById('admin-name-input');
+        const adminStarsContainer = document.getElementById('admin-stars-container');
+        const adminSubmitBtn = document.getElementById('admin-submit-btn');
+        const adminMessageBox = document.getElementById('admin-message-box');
+        
+        const ratingsList = document.getElementById('ratings-list');
+        const exportBtn = document.getElementById('export-btn');
+        const userIdDisplay = document.getElementById('user-id');
+
+        let selectedRating = 0;
+        let selectedAdminRating = 0;
+        let userId = null;
+        let isAdmin = false;
+        
+        // Function to sign in the user
+        async function signIn() {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
+                }
+            } catch (error) {
+                console.error("Error signing in:", error);
+            }
+        }
+        
+        // Check authentication state
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                userIdDisplay.textContent = userId;
+                isAdmin = !!initialAuthToken;
+
+                if (isAdmin) {
+                    studentView.classList.add('hidden');
+                    adminView.classList.remove('hidden');
+                    setupAdminView();
+                } else {
+                    studentView.classList.remove('hidden');
+                    adminView.classList.add('hidden');
+                    setupStudentView();
+                }
+            } else {
+                console.log("User is signed out or auth state is not yet ready.");
+            }
+        });
+
+        // Setup the student rating view and functionality
+        async function setupStudentView() {
+            const stars = studentStarsContainer.querySelectorAll('.star');
+            // This function handles the logic for updating star colors
+            function updateStars(starsToUpdate, rating) {
+                starsToUpdate.forEach(s => {
+                    s.classList.toggle('filled', parseInt(s.dataset.rating) <= rating);
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    selectedRating = parseInt(star.dataset.rating);
+                    updateStars(stars, selectedRating);
+                });
+                star.addEventListener('mouseover', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    updateStars(stars, rating);
+                });
+                star.addEventListener('mouseout', () => {
+                    updateStars(stars, selectedRating);
+                });
+            });
+
+            studentRatingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                studentSubmitBtn.disabled = true;
+                const studentName = studentNameInput.value;
+
+                if (selectedRating === 0) {
+                    showMessage(messageBox, 'الرجاء اختيار تقييم من 1 إلى 5 نجوم.', 'bg-red-200 text-red-800');
+                    studentSubmitBtn.disabled = false;
+                    return;
+                }
+
+                try {
+                    const ratingsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/ratings`);
+                    await addDoc(ratingsCollectionRef, {
+                        name: studentName,
+                        rating: selectedRating,
+                        timestamp: serverTimestamp()
+                    });
+                    
+                    showMessage(messageBox, 'شكراً لك، تم إرسال تقييمك بنجاح!', 'bg-green-200 text-green-800');
+                    studentRatingForm.reset();
+                    selectedRating = 0;
+                    updateStars(stars, selectedRating);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                    showMessage(messageBox, 'حدث خطأ أثناء إرسال التقييم. حاول مرة أخرى.', 'bg-red-200 text-red-800');
+                } finally {
+                    studentSubmitBtn.disabled = false;
+                }
+            });
+        }
+        
+        // Setup the admin view to display and export ratings
+        async function setupAdminView() {
+            const ratingsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/ratings`);
+            
+            // This function handles the logic for updating star colors
+            function updateStars(starsToUpdate, rating) {
+                starsToUpdate.forEach(s => {
+                    s.classList.toggle('filled', parseInt(s.dataset.rating) <= rating);
+                });
+            }
+
+            // Add functionality for the admin rating form
+            const adminStars = adminStarsContainer.querySelectorAll('.star');
+            adminStars.forEach(star => {
+                star.addEventListener('click', () => {
+                    selectedAdminRating = parseInt(star.dataset.rating);
+                    updateStars(adminStars, selectedAdminRating);
+                });
+                star.addEventListener('mouseover', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    updateStars(adminStars, rating);
+                });
+                star.addEventListener('mouseout', () => {
+                    updateStars(adminStars, selectedAdminRating);
+                });
+            });
+
+            adminRatingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                adminSubmitBtn.disabled = true;
+                const adminName = adminNameInput.value;
+
+                if (selectedAdminRating === 0) {
+                    showMessage(adminMessageBox, 'الرجاء اختيار تقييم من 1 إلى 5 نجوم.', 'bg-red-200 text-red-800');
+                    adminSubmitBtn.disabled = false;
+                    return;
+                }
+
+                try {
+                    await addDoc(ratingsCollectionRef, {
+                        name: adminName,
+                        rating: selectedAdminRating,
+                        timestamp: serverTimestamp()
+                    });
+                    
+                    showMessage(adminMessageBox, 'تم إرسال تقييمك بنجاح!', 'bg-green-200 text-green-800');
+                    adminRatingForm.reset();
+                    selectedAdminRating = 0;
+                    updateStars(adminStars, selectedAdminRating);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                    showMessage(adminMessageBox, 'حدث خطأ أثناء إرسال التقييم. حاول مرة أخرى.', 'bg-red-200 text-red-800');
+                } finally {
+                    adminSubmitBtn.disabled = false;
+                }
+            });
+
+            // Listen for real-time updates to the ratings and re-render the list
+            onSnapshot(ratingsCollectionRef, (snapshot) => {
+                let ratingsData = [];
+                snapshot.forEach((doc) => {
+                    ratingsData.push(doc.data());
+                });
+                renderRatings(ratingsData);
+            });
+            
+            // Handle the export button click
+            exportBtn.addEventListener('click', async () => {
+                const querySnapshot = await getDocs(ratingsCollectionRef);
+                let ratings = [];
+                querySnapshot.forEach(doc => {
+                    ratings.push(doc.data());
+                });
+
+                if (ratings.length === 0) {
+                    showMessage(adminMessageBox, 'لا توجد بيانات لتصديرها.', 'bg-yellow-200 text-yellow-800');
+                    return;
+                }
+
+                // Create CSV content with UTF-8 BOM for proper Arabic display in Excel
+                let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+                csvContent += "الاسم,التقييم,التاريخ\n";
+
+                ratings.forEach(rating => {
+                    const date = rating.timestamp ? new Date(rating.timestamp.toDate()).toLocaleString('ar-SA') : 'غير متوفر';
+                    const row = `"${rating.name}",${rating.rating},"${date}"\n`;
+                    csvContent += row;
+                });
+
+                // Create a link to download the CSV file
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `تقييمات-الكورس-${new Date().toLocaleDateString()}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showMessage(adminMessageBox, 'تم إنشاء ملف التصدير بنجاح.', 'bg-green-200 text-green-800');
+            });
+        }
+
+        // Display a temporary message to the user
+        function showMessage(element, text, className) {
+            element.textContent = text;
+            element.className = `mt-4 p-4 rounded-lg text-center ${className}`;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Render the list of ratings on the admin dashboard
+        function renderRatings(ratings) {
+            ratingsList.innerHTML = ''; // Clear previous ratings
+            if (ratings.length === 0) {
+                ratingsList.innerHTML = `<p class="text-gray-500 text-center">لا توجد تقييمات حتى الآن.</p>`;
+                return;
+            }
+
+            // Sort ratings by timestamp, newest first. Add checks to prevent errors if timestamp is not yet available.
+            ratings.sort((a, b) => {
+                const timeA = a.timestamp ? a.timestamp.toMillis() : 0;
+                const timeB = b.timestamp ? b.timestamp.toMillis() : 0;
+                return timeB - timeA;
+            });
+
+            ratings.forEach(rating => {
+                const date = rating.timestamp ? new Date(rating.timestamp.toDate()).toLocaleString('ar-SA') : 'غير متوفر';
+                const ratingItem = document.createElement('div');
+                ratingItem.className = 'bg-gray-50 p-4 rounded-lg shadow-sm flex items-center justify-between';
+                ratingItem.innerHTML = `
+                    <div>
+                        <p class="font-semibold text-gray-800">${rating.name}</p>
+                        <p class="text-sm text-gray-500">تم التقييم في: ${date}</p>
+                    </div>
+                    <div class="flex items-center gap-1 text-yellow-400">
+                        ${[...Array(5)].map((_, i) => `<svg class="w-5 h-5 ${i < rating.rating ? 'text-yellow-400' : 'text-gray-300'}" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.936a1 1 0 00.95.691h4.148c.969 0 1.371 1.24.588 1.81l-3.352 2.437a1 1 0 00-.364 1.118l1.286 3.936c.3.921-.755 1.688-1.54 1.118l-3.352-2.437a1 1 0 00-1.176 0l-3.352 2.437c-.785.57-1.84-.197-1.54-1.118l1.286-3.936a1 1 0 00-.364-1.118L2.091 9.364c-.783-.57-.381-1.81.588-1.81h4.148a1 1 0 00.95-.691l1.286-3.936z"/>
+                        </svg>`).join('')}
+                    </div>
+                `;
+                ratingsList.appendChild(ratingItem);
+            });
+        }
+
+        // Start the application by signing in
+        signIn();
+    </script>
+</body>
+</html>
